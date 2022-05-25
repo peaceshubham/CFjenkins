@@ -1,0 +1,70 @@
+{
+  "Description": "CloudFormation template for creating an ec2 instance",
+  "Parameters": {
+    "KeyName": {
+      "Description": "Key Pair name",
+      "Type": "AWS::EC2::KeyPair::KeyName",
+      "Default": "lampkey"
+    },
+    "VPC": {
+      "Type": "AWS::EC2::VPC::Id",
+      "Default": "	vpc-032ef968"
+    },
+    "Subnet": {
+      "Type": "AWS::EC2::Subnet::Id",
+      "Default": "	subnet-4438c42f"
+    },
+    "InstanceType": {
+      "Description": "Select one of the possible instance types",
+      "Type": "String",
+      "Default": "t2.micro",
+      "AllowedValues": [
+        "t2.micro",
+        "t2.small",
+        "t2.medium"
+      ]
+    },
+    "SecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup::Id",
+      "Default": "	sg-05f9358c575907bd7",
+      "AllowedValues": [
+        "sg-xxxxx",
+        "sg-yyy",
+        "sg-zzz"
+      ]
+    }
+  },
+  "Resources": {
+    "Server": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "ImageId": "ami-0756a1c858554433e",
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "SecurityGroupIds": [
+          {
+            "Ref": "SecurityGroup"
+          }
+        ],
+        "SubnetId": {
+          "Ref": "Subnet"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "PublicName": {
+      "Value": {
+        "Fn::GetAtt": [
+          "Server",
+          "PublicDnsName"
+        ]
+      },
+      "Description": "Public name (connect via SSH)"
+    }
+  }
+}
