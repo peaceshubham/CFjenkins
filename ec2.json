@@ -26,7 +26,7 @@
     },
     "SecurityGroup": {
       "Type": "AWS::EC2::SecurityGroup::Id",
-      "Default": "	sg-05f9358c575907bd7",
+      "Default": "sg-05f9358c575907bd7",
     }
   },
   "Resources": {
